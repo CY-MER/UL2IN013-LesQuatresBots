@@ -11,23 +11,26 @@ class Robot:
         self.rotation_tete = rot_tete # rotation de la tete par rapport au corps
         self.portee_capteur = sens # porte du capteur
 
-    def avancer(self, dist:float):
+    def avancer(self, dist:float, dt: float = 1.0):
         """ fait avancer le robot dans la direction de sa rotation """
         rad = math.radians(self.rotation)
         self.x += dist * math.cos(rad)
         self.y += dist * math.sin(rad)
-
+        
+        # vitesse 
+        self.vitesse = dist / dt
         # arrondir pour nettoyer les micro-erreurs de calcul sur flottant
         self.x = round(self.x, 4)
         self.y = round(self.y, 4)
 
     def tourner(self, a:int):
+        self.vitesse = 0.0
         """ fait tourner le robot d'un angle a """
         self.rotation = (self.rotation + a) % 360
 
     def get_location(self):
         """ renvoie la position et l'orientation du robot """
-        return self.x, self.y, self.rotation
+        return self.x, self.y, self.rotation, self.vitesse
     
     def get_cible_capteur(self):
         """ renvoie la position regarde par le capteur en fonction de la rotation du robot et celle de sa tete """
