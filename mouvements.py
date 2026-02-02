@@ -12,6 +12,6 @@ def carre(robot, cote:float, delay:float=0.1):
 
         print("Coté n°", i+1)
         for _ in range(10):
-            robot.avancer(cote/10)
+            robot.avancer(cote/10, delay)
             print(robot.get_location()) # suivit du robot
             time.sleep(delay)
