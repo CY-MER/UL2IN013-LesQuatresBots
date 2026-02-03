@@ -16,6 +16,7 @@ steps = 40
 side = 0                        
 step = 0                        
 
+en_pause_rotation = False
 
 running = True
 while running:
@@ -26,10 +27,17 @@ while running:
 
     # Tracer un carré 
     if side < 4:  # on trace 4 côtés
-        if step == 0:
+        if step == 0 and not en_pause_rotation:
+
             robot.tourner(90)     
             robot.vitesse = 0     # vitesse = 0 pendant la rotation
-        if step < steps:
+            en_pause_rotation = True 
+        
+        elif en_pause_rotation:
+            en_pause_rotation = False
+            step = 1   # on sort de la frame de pause
+        
+        elif step < steps:
             robot.avancer(cote/steps, dt=1) 
             points.append((robot.x, robot.y))  
             step += 1
