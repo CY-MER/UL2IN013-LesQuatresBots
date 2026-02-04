@@ -1,5 +1,5 @@
 from robot import Robot 
-from mouvement import carre 
+from mouvements import carre 
 import math 
 
 
@@ -50,7 +50,7 @@ def test_capteur():
 
 def test_carre():
     robot = Robot(0, 0, 0)
-    carre(robot, 20, delay=0)
+    carre(robot, 20, delay=0.1)
 
     x, y, angle, _ = robot.get_location()
 
