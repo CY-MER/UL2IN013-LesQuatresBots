@@ -11,7 +11,7 @@ def test_initialisation():
     assert y == 0.0, "y initial incorrect"
     assert angle == 0, "rotation initiale incorrecte"
     assert vitesse == 0.0, "vitesse initiale incorrecte"
-    printf(" Test initialisation OK")
+    print(" Test initialisation OK")
 
 def test_avancer():
     robot = Robot(0, 0, 0)
@@ -22,7 +22,7 @@ def test_avancer():
     assert x == 10.0, "avancer() : x incorrect"
     assert y == 0.0, "avancer() : y incorrect"
     assert vitesse == 5.0, "avancer() : vitesse incorrecte"
-    printf("Test avancer OK") 
+    print("Test avancer OK") 
 
 def test_tourner():
     robot = Robot()
@@ -31,7 +31,7 @@ def test_tourner():
 
     robot.tourner(300)
     assert robot.rotation == 30, "tourner() modulo 360 incorrect"
-    printf(" Test tourner OK")
+    print(" Test tourner OK")
 
 def test_capteur():
     robot = Robot(0, 0, 0, sens=10)
@@ -45,7 +45,7 @@ def test_capteur():
 
     assert cx == 0.0, "capteur x après rotation incorrect"
     assert cy == 10.0, "capteur y après rotation incorrect"
-    printf(" Test capteur OK")
+    print(" Test capteur OK")
 
 
 def test_carre():
@@ -58,7 +58,7 @@ def test_carre():
     assert math.isclose(x, 0.0, abs_tol=0.01), "carré : x final incorrect"
     assert math.isclose(y, 0.0, abs_tol=0.01), "carré : y final incorrect"
     assert angle == 0, "carré : rotation finale incorrecte"
-    printf(" Test carré OK")
+    print(" Test carré OK")
   
 def main():
     print("=== DÉBUT DES TESTS ===")
@@ -67,7 +67,7 @@ def main():
     test_tourner()
     test_capteur()
     test_carre()
-    printf("=== TOUS LES TESTS SONT VALIDES ✅ ===")
+    print("=== TOUS LES TESTS SONT VALIDES ✅ ===")
 
 
 main()
