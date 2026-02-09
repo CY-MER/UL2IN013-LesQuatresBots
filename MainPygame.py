@@ -4,6 +4,7 @@ from robot import Robot
 #  Initialisation de Pygame
 pygame.init()
 screen = pygame.display.set_mode((400, 400))  # taille de la fenêtre
+largeur, hauteur = screen.get_size() # récupère la taille de la fentre
 pygame.display.set_caption("Robot ")      # titre de la fenêtre
 clock = pygame.time.Clock()                    # pour contrôler la vitesse des frames
 font = pygame.font.Font(None, 24)             # police pour afficher texte
@@ -39,6 +40,7 @@ while running:
         
         elif step < steps:
             robot.avancer(cote/steps, dt=1) 
+            robot.update(largeur, hauteur)
             points.append((robot.x, robot.y))  
             step += 1
         else:
