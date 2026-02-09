@@ -18,7 +18,21 @@ class Robot:
         self.y += dist * math.sin(rad)
         
         # vitesse 
-        self.vitesse = dist / dt
+
+    def maj_vitesse(self, dt):
+        if self._temps_restant <= 0:
+            self.vitesse = 0
+            return
+
+        dt_effectif = min(dt, self._temps_restant)
+
+        rad = math.radians(self.rotation)
+
+        self.x += self.vitesse * math.cos(rad) * dt_effectif
+        self.y += self.vitesse * math.sin(rad) * dt_effectif
+
+        self._temps_restant -= dt_effectif
+
         # arrondir pour nettoyer les micro-erreurs de calcul sur flottant
         self.x = round(self.x, 4)
         self.y = round(self.y, 4)
