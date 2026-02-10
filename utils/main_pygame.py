@@ -4,9 +4,7 @@ from robot_vecteur import RobotVecteur
 import math
 import random
 
-# -------------------
 # Initialisation Pygame
-# -------------------
 pygame.init()
 LARGEUR, HAUTEUR = 800, 600
 screen = pygame.display.set_mode((LARGEUR, HAUTEUR))
@@ -20,23 +18,17 @@ ROUGE = (255, 0, 0)
 VERT = (0, 255, 0)
 BLEU = (0, 0, 255)
 
-# -------------------
 # Obstacles
-# -------------------
 obstacles = [
     Obstacle("rectangle", (100, 100, 150, 100)),
     Obstacle("cercle", (500, 300, 50)),
     Obstacle("triangle", ((600, 100), (700, 200), (650, 250)))
 ]
 
-# -------------------
 # Robot
-# -------------------
 robot = RobotVecteur(x=50, y=50, rot=0)
 
-# -------------------
 # Boucle principale
-# -------------------
 running = True
 vitesse_robot = 3  # distance parcourue chaque frame
 while running:
@@ -48,9 +40,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    # -------------------
     # Déplacement automatique
-    # -------------------
     robot.avancer(vitesse_robot)
 
     # Vérifier collision avec obstacles
@@ -60,9 +50,7 @@ while running:
             robot.tourner(random.randint(90, 180))
             break  # évite de tourner plusieurs fois en une frame
 
-    # -------------------
     # Dessin obstacles
-    # -------------------
     for obs in obstacles:
         if obs.type == "rectangle":
             x, y, w, h = obs.data
@@ -73,9 +61,7 @@ while running:
         elif obs.type == "triangle":
             pygame.draw.polygon(screen, BLEU, obs.data)
 
-    # -------------------
     # Dessin robot
-    # -------------------
     x, y, rot, _ = robot.get_location()
     pygame.draw.circle(screen, NOIR, (int(x), int(y)), 10)
     dx = 15 * math.cos(math.radians(rot))
