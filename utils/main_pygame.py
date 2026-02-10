@@ -2,20 +2,18 @@ import pygame
 from obstacle import Obstacle
 from robot_vecteur import RobotVecteur
 import math
+import random
 
 # -------------------
 # Initialisation Pygame
 # -------------------
 pygame.init()
-
 LARGEUR, HAUTEUR = 800, 600
 screen = pygame.display.set_mode((LARGEUR, HAUTEUR))
-pygame.display.set_caption("Test Robot + Obstacles")
+pygame.display.set_caption("Robot autonome avec obstacles")
 clock = pygame.time.Clock()
 
-# -------------------
 # Couleurs
-# -------------------
 BLANC = (255, 255, 255)
 NOIR = (0, 0, 0)
 ROUGE = (255, 0, 0)
@@ -23,7 +21,7 @@ VERT = (0, 255, 0)
 BLEU = (0, 0, 255)
 
 # -------------------
-# Création obstacles
+# Obstacles
 # -------------------
 obstacles = [
     Obstacle("rectangle", (100, 100, 150, 100)),
@@ -32,7 +30,7 @@ obstacles = [
 ]
 
 # -------------------
-# Création robot
+# Robot
 # -------------------
 robot = RobotVecteur(x=50, y=50, rot=0)
 
@@ -40,29 +38,27 @@ robot = RobotVecteur(x=50, y=50, rot=0)
 # Boucle principale
 # -------------------
 running = True
+vitesse_robot = 3  # distance parcourue chaque frame
 while running:
-    clock.tick(30)  # 30 FPS
+    clock.tick(30)
     screen.fill(BLANC)
 
-    # -------------------
     # Gestion des événements
-    # -------------------
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
     # -------------------
-    # Contrôle du robot avec les touches
+    # Déplacement automatique
     # -------------------
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_UP]:
-        robot.avancer(5)
-    if keys[pygame.K_DOWN]:
-        robot.avancer(-5)
-    if keys[pygame.K_LEFT]:
-        robot.tourner(-5)
-    if keys[pygame.K_RIGHT]:
-        robot.tourner(5)
+    robot.avancer(vitesse_robot)
+
+    # Vérifier collision avec obstacles
+    for obs in obstacles:
+        if obs.collision(robot):
+            # Si collision → tourner d'un angle aléatoire
+            robot.tourner(random.randint(90, 180))
+            break  # évite de tourner plusieurs fois en une frame
 
     # -------------------
     # Dessin obstacles
@@ -81,15 +77,11 @@ while running:
     # Dessin robot
     # -------------------
     x, y, rot, _ = robot.get_location()
-    pygame.draw.circle(screen, NOIR, (int(x), int(y)), 10)  # robot comme un cercle de rayon 10
-    # ligne direction
+    pygame.draw.circle(screen, NOIR, (int(x), int(y)), 10)
     dx = 15 * math.cos(math.radians(rot))
     dy = 15 * math.sin(math.radians(rot))
     pygame.draw.line(screen, NOIR, (int(x), int(y)), (int(x+dx), int(y+dy)), 2)
 
-    # -------------------
-    # Affichage
-    # -------------------
     pygame.display.flip()
 
 pygame.quit()
