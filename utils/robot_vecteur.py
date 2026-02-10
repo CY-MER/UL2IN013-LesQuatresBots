@@ -1,6 +1,6 @@
 import math
-from Vecteur2D import Vecteur2D
-from Point import Point
+from vecteur2D import Vecteur2D
+from point import Point
 
 
 class RobotVecteur:
