@@ -9,7 +9,7 @@ On attendra enfin une nouvelle fonctionnalité du robot lui permettant d'effectu
 
 # Description du Projet :
 
-Ce projet consiste à développer un mini-robot équipé de capteurs et contrôleur, capable de se déplacer et d'éviter des obstacles. Le but principal est de tester les fonctionnalités du robot sur un simulateur avant de le mettre en mouvement réel.
+Ce projet consiste à développer un mini-robot équipé de capteurs et contrôleur, capable de se déplacer et d'éviter des obstacles. Le but principal est de tester les fonctionnalités du robot sur un simulateur ( 2D et 3D ) avant de le mettre en mouvement réel.
 # Objectifs principaux :
 
     . Tracer un carré
