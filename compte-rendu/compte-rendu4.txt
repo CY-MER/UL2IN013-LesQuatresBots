@@ -8,7 +8,10 @@ Afin de simplifier la gestion des collisions, on a representé les obstacles sou
 
 - Mise en Place d’un Système de Détection de Collisions
 Nous avons implémenté un système de détection de collisions basé sur les vecteurs. Ce système repose sur l’analyse des intersections entre les segments du robot et ceux des obstacles .
-Aussi , dès qu'un robot se rapproche d'un mur il le détecte .
+De plus, le robot est capable de détecter sa proximité avec un mur avant même une collision directe.
+
+- Implémentation du Module Graphique des Polygones
+Nous avons ajouté un module permettant de dessiner les polygones à l’aide de Pygame. Celui-ci permet d’afficher les différentes formes géométriques en convertissant leurs coordonnées vers le repère de l’écran, ainsi qu’une fonction générique capable de gérer plusieurs types de polygones.
 
 - Amélioration du Comportement du Robot
 Le robot est désormais capable de détecter les obstacles présents dans son environnement. Lorsqu’une collision est détectée , le robot adapte automatiquement son comportement en changeant de direction afin d’éviter l’obstacle.
