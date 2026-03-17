@@ -1,5 +1,6 @@
 # ProjetRobotG4
-main: code principal
+main: code principal 
+
 dev1: code experimental avec pygame
 
 # UserStory:
