@@ -1,1 +1,14 @@
+Objectif de la 3ère semaine :
+
+- Création de la Classe Point
+Nous avons introduit une nouvelle classe Point permettant de manipuler des positions dans l’espace. Cette classe prend en charge le calcul de la distance entre deux points ainsi que la conversion de deux points en un vecteur.
+
+- Implémentation de la Classe Vecteur
+À partir de la classe Point, nous avons développé une classe Vecteur intégrant les principales opérations vectorielles. Cette classe permet notamment d’effectuer des additions, des soustractions, des rotations, ainsi que des calculs de produit scalaire et de produit vectoriel.
+
+- Refactorisation du Modèle du Robot
+Nous avons ensuite repensé la structure du robot en nous appuyant exclusivement sur des vecteurs pour représenter ses propriétés (position, direction, déplacement, etc.). 
+
+- Adaptation des Fonctionnalités Existantes
+Les fonctionnalités déjà présentes (déplacement, rotation, etc.) ont été conservées, mais adaptées pour fonctionner avec des vecteurs plutôt qu’avec des valeurs scalaires. Cela améliore la flexibilité du code et facilite l’ajout de nouvelles fonctionnalités .
 
