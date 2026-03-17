@@ -1,1 +1,17 @@
+Objectif de la 1ère semaine :
 
+Nous avons commencé par renforcer nos connaissances en Python et sur GitHub en suivant des tutoriels et en réalisant quelques exercices.
+Ensuite, nous avons développé un modèle de robot avec les fonctionnalités suivantes :
+
+- Initialisation des paramètres (position x y, vitesse, rotation, rotation de la tête)
+
+- Fonction de déplacement (avancer)
+
+- Rotation avec un angle (tourner)
+
+- Mise à jour des vitesses (maj_vitesse)
+
+- Récupération des informations du robot (get_localisation)
+
+Nous avons effectué des tests sur chacune de ces fonctions.
+Enfin, nous avons pu obtenir les informations de position (x, y) et de rotation sous forme de texte affiché dans le terminal.
