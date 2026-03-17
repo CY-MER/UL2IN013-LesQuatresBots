@@ -1,4 +1,5 @@
 Objectif de la 2ère semaine :
+
 - Nous avons ajouté une nouvelle fonctionnalité permettant au robot de tracer un carré.  Cette implémentation repose sur une rotation à angle droit.
 - Pour réaliser cette forme correctement, nous avons modifié le comportement du robot lors des changements de direction. La vitesse est désormais annulée à chaque rotation, ce qui permet d’obtenir des angles plus précis avant la reprise du mouvement.
 - Nous avons également implémenté une fonction permettant de déterminer la position ciblée par le capteur du robot, en fonction de sa rotation et de celle de sa tête : 
