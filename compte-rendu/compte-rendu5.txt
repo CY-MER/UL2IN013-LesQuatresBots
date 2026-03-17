@@ -1,0 +1,1 @@
+Nous devrions introduire les statégies : start, stop, step, update, fusionner les fonctions avancer , tourner et utiliser les stratégies pour faire déplacer le robot en carré 
