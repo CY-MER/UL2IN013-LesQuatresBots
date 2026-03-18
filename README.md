@@ -1,7 +1,6 @@
 # ProjetRobotG4
-main: code principal 
-
-dev1: code experimental avec pygame
+lien trello: https://trello.com/b/XsE0KSBz/ul2in013-lesquatresbots
+lien github cours: https://github.com/baskiotisn/2IN013robot2025
 
 # UserStory:
 En tant qu'utilisateur j'ai besion d'un robot capable de faire des deplacements prédefinis, le robot doit aussi être capable de detecter les obstacles et les éviter, éventuellement suivre une balise ou autre fonctionnalités nécessaires.
