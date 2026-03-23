@@ -58,3 +58,8 @@ class RobotVecteur:
             direction_capteur.echelle(self.portee_capteur)
         )
         return round(cible.x, 4), round(cible.y, 4)
+
+
+   def points(self):
+        """Retourne la liste des points du corps du robot"""
+        return [(self.position.x, self.position.y)]
