@@ -33,6 +33,12 @@ class GameController:
         self.en_pause_rotation = False
         self.running = True
 
+        #obstacles 
+        self.obstacles = [
+            pygame.Rect(130, 180, 30, 30),
+            pygame.Rect(150, 260, 30, 30),
+        ]
+
     def handle_events(self):
         """Gestion des evenements"""
         for event in pygame.event.get():
@@ -63,7 +69,17 @@ class GameController:
             self.step = 1
         elif self.step < self.steps:
             distance = self.cote / self.steps
+            ancien_x, ancien_y = self.robot.x, self.robot.y
+
             self.robot.avancer(distance, dt=1.0)
+
+            robot_rect = pygame.Rect(int(self.robot.x) - 5, int(self.robot.y) - 5, 10, 10)
+
+            for obstacle in self.obstacles:
+                if robot_rect.colliderect(obstacle):
+                    self.robot.x, self.robot.y = ancien_x, ancien_y
+                    return
+
             self.points.append((self.robot.x, self.robot.y))
             self.step += 1
         else:
@@ -73,6 +89,11 @@ class GameController:
     def render(self):
         """Affichage"""
         self.view.clear()
+        self.view.draw_grid()
+
+        for obstacle in self.obstacles:
+            pygame.draw.rect(self.view.screen, (0, 0, 0), obstacle)
+
         self.view.draw_path(self.points, color=(255, 0, 0), width=2)
         self.view.draw_robot(self.robot.x, self.robot.y, radius=5, color=(0, 0, 255))
 
