@@ -1,105 +1,30 @@
-"""Controleur principal du jeu"""
-try:
-    import pygame
-    PYGAME_AVAILABLE = True
-except ImportError:
-    PYGAME_AVAILABLE = False
-    print("Warning: pygame n'est pas installé")
+"""Controleur principal : orchestre vue + simulation"""
 
-from models import Robot
+import pygame
 
-if PYGAME_AVAILABLE:
-    from views import GameView
+from controllers.simulation_controller import SimulationController
+from views import GameView
 
 
 class GameController:
-    """Gère la logique du jeu"""
+    """Coordonne la simulation et l'affichage"""
 
     def __init__(self, width=400, height=400):
-        if not PYGAME_AVAILABLE:
-            raise ImportError("pygame requis")
-
-        self.width = width
-        self.height = height
+        self.simulation = SimulationController(width, height)
         self.view = GameView(width, height, "Robot Simulation")
-        self.robot = Robot(width // 2, height // 2)
-        self.points = [(self.robot.x, self.robot.y)]
-
-        # parametres du carre
-        self.cote = 100
-        self.steps = 40
-        self.side = 0
-        self.step = 0
-        self.en_pause_rotation = False
         self.running = True
 
-        #obstacles 
-        self.obstacles = [
-            pygame.Rect(130, 180, 30, 30),
-            pygame.Rect(150, 260, 30, 30),
-        ]
-
     def handle_events(self):
-        """Gestion des evenements"""
+        """Gestion des événements utilisateur"""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
+
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.running = False
                 elif event.key == pygame.K_r:
-                    # reset
-                    self.robot = Robot(self.width // 2, self.height // 2)
-                    self.points = [(self.robot.x, self.robot.y)]
-                    self.side = 0
-                    self.step = 0
-                    self.en_pause_rotation = False
-
-    def update(self):
-        """Update logique"""
-        if self.side >= 4:
-            return
-
-        if self.step == 0 and not self.en_pause_rotation:
-            self.robot.tourner(90)
-            self.robot.vitesse = 0.0
-            self.en_pause_rotation = True
-        elif self.en_pause_rotation:
-            self.en_pause_rotation = False
-            self.step = 1
-        elif self.step < self.steps:
-            distance = self.cote / self.steps
-            ancien_x, ancien_y = self.robot.x, self.robot.y
-
-            self.robot.avancer(distance, dt=1.0)
-
-            robot_rect = pygame.Rect(int(self.robot.x) - 5, int(self.robot.y) - 5, 10, 10)
-
-            for obstacle in self.obstacles:
-                if robot_rect.colliderect(obstacle):
-                    self.robot.x, self.robot.y = ancien_x, ancien_y
-                    return
-
-            self.points.append((self.robot.x, self.robot.y))
-            self.step += 1
-        else:
-            self.step = 0
-            self.side += 1
-
-    def render(self):
-        """Affichage"""
-        self.view.clear()
-        self.view.draw_grid()
-
-        for obstacle in self.obstacles:
-            pygame.draw.rect(self.view.screen, (0, 0, 0), obstacle)
-
-        self.view.draw_path(self.points, color=(255, 0, 0), width=2)
-        self.view.draw_robot(self.robot.x, self.robot.y, radius=5, color=(0, 0, 255))
-
-        x, y, angle, vitesse = self.robot.get_location()
-        self.view.draw_info(x, y, angle, vitesse)
-        self.view.update()
+                    self.simulation.reset()
 
     def run(self):
         """Boucle principale"""
@@ -108,8 +33,11 @@ class GameController:
 
         while self.running:
             self.handle_events()
-            self.update()
-            self.render()
+            self.simulation.update()
+
+            data = self.simulation.get_robot_info()
+            self.view.render_simulation(data)
+
             self.view.delay(100)
             self.view.tick(60)
 
