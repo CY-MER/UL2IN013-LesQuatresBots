@@ -2,6 +2,7 @@
 import pygame
 
 
+
 class GameView:
     """Gere l'affichage pygame"""
 
@@ -37,11 +38,27 @@ class GameView:
                 [(int(p[0]), int(p[1])) for p in points],
                 width
             )
+        
+    def draw_obstacles(self, obstacles, color=(120, 120, 120)):
+        for obstacle in obstacles:
+            if obstacle.type == "cercle":
+                cx, cy, rayon = obstacle.data
+                pygame.draw.circle(self.screen, color, (int(cx), int(cy)), rayon)
 
-    def draw_robot(self, x, y, radius=5, color=(0, 0, 0)):
+            elif obstacle.type == "rectangle":
+                x, y, largeur, hauteur = obstacle.data
+                pygame.draw.rect(self.screen, color, (x, y, largeur, hauteur))
+
+            elif obstacle.type == "triangle":
+                p1, p2, p3 = obstacle.data
+                pygame.draw.polygon(self.screen, color, [p1, p2, p3])
+        
+
+    def draw_robot(self, x, y, radius=5, color=(0, 0, 255)):
         """Dessine le robot"""
         pygame.draw.circle(self.screen, color, (int(x), int(y)), radius)
 
+   
     def draw_info(self, x, y, angle, vitesse):
         """Affiche les infos du robot"""
         info_lines = [
@@ -53,6 +70,23 @@ class GameView:
         for i, line in enumerate(info_lines):
             text = self.font.render(line, True, (0, 0, 0))
             self.screen.blit(text, (10, 10 + i * 25))
+
+    
+    def render_simulation(self, simulation_data):
+        """affiche tout à partir des donées de la simulation"""
+        self.clear()
+        self.draw_grid()
+        self.draw_obstacles(simulation_data["obstacles"])
+        self.draw_path(simulation_data["points"])
+        self.draw_robot(simulation_data["x"], simulation_data["y"])
+        self.draw_info(
+            simulation_data["x"],
+            simulation_data["y"],
+            simulation_data["angle"],
+            simulation_data["vitesse"]
+        )
+        self.update()
+
 
     def draw_text(self, text, x, y, color=(0, 0, 0)):
         """Affiche du texte"""
