@@ -1,8 +1,7 @@
 import pygame
 import sys
 import math
-from robot_vecteur import RobotVecteur
-from collision import Obstacle
+from models import RobotVecteur, Obstacle
 
 # --- CONFIGURATION ---
 WIDTH, HEIGHT = 800, 600
