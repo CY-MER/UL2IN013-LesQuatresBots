@@ -15,14 +15,14 @@ RED   = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE  = (0, 0, 255)
 GRAY  = (200, 200, 200)
-
 class RobotFantome:
     """ Un robot invisible utilisé pour tester la collision en avance """
     def __init__(self, x, y):
         self.x = x
         self.y = y
-    def points(self):
-        return [(self.x, self.y)]
+
+    def get_location(self):
+        return self.x, self.y, 0, 0
 
 def main():
     pygame.init()
