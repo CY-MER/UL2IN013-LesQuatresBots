@@ -1,6 +1,6 @@
 """Vue pour l'affichage pygame"""
 import pygame
-
+import math
 
 
 class GameView:
@@ -54,9 +54,21 @@ class GameView:
                 pygame.draw.polygon(self.screen, color, [p1, p2, p3])
         
 
-    def draw_robot(self, x, y, radius=5, color=(0, 0, 255)):
-        """Dessine le robot"""
-        pygame.draw.circle(self.screen, color, (int(x), int(y)), radius)
+    def draw_robot(self, x, y, angle=0, radius=5, color=(0, 0, 255)):
+    pygame.draw.circle(self.screen, color, (int(x), int(y)), radius)
+
+    # direction
+    longueur = 15
+    dx = longueur * math.cos(math.radians(angle))
+    dy = longueur * math.sin(math.radians(angle))
+
+    pygame.draw.line(
+        self.screen,
+        (0, 0, 0),
+        (int(x), int(y)),
+        (int(x + dx), int(y + dy)),
+        2
+    )
 
    
     def draw_info(self, x, y, angle, vitesse):
@@ -78,7 +90,7 @@ class GameView:
         self.draw_grid()
         self.draw_obstacles(simulation_data["obstacles"])
         self.draw_path(simulation_data["points"])
-        self.draw_robot(simulation_data["x"], simulation_data["y"])
+        self.draw_robot(simulation_data["x"], simulation_data["y"], simulation_data["angle"])
         self.draw_info(
             simulation_data["x"],
             simulation_data["y"],
