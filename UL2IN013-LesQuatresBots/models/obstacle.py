@@ -10,7 +10,7 @@ class Obstacle:
 
     def collision(self, robot):
         """ Retourne True si un des points du robot est dans l'obstacle """
-        px, py = robot.x, robot.y
+        px, py, _, _ = robot.get_location()
       
 
         if self.type == "rectangle":
