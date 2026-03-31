@@ -10,7 +10,7 @@ class RobotVecteur:
     def __init__(self, x: float = 0.0, y: float = 0.0, rot: int = 0,
                  rot_tete: int = 0, sens: float = 10.0):
         self.position = Point(x, y)
-        self.rotation = rot
+        self.rotation = rot % 360
         self.direction = Vecteur2D(
             math.cos(math.radians(rot)),
             math.sin(math.radians(rot))
