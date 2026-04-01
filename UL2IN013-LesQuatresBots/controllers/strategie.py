@@ -83,6 +83,7 @@ class Carre(Strategie):
         self.phase = "avance"
         self.strategie_courante = Avancer(cote, pas)
         self.terminee = False
+        
     def update(self, robot, obstacles=None):
         if self.terminee:
             return
