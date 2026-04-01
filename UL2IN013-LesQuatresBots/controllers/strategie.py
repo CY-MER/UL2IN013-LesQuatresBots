@@ -14,7 +14,7 @@ class Avancer(Strategie):
         self.distance_parcourue = 0
         self.terminee = False
 
-    def update(self, robot):
+    def update(self, robot, obstacles=None):
         if self.terminee:
             return
 
