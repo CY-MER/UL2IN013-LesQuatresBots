@@ -39,16 +39,15 @@ class GameView:
                 width
             )
         
-    def draw_obstacles(self, obstacles, color=(120, 120, 120)):
+    def draw_obstacles(self, obstacles):
         for obstacle in obstacles:
+            color = obstacle.couleur  # <- prend la couleur de l'obstacle
             if obstacle.type == "cercle":
                 cx, cy, rayon = obstacle.data
                 pygame.draw.circle(self.screen, color, (int(cx), int(cy)), rayon)
-
             elif obstacle.type == "rectangle":
                 x, y, largeur, hauteur = obstacle.data
                 pygame.draw.rect(self.screen, color, (x, y, largeur, hauteur))
-
             elif obstacle.type == "triangle":
                 p1, p2, p3 = obstacle.data
                 pygame.draw.polygon(self.screen, color, [p1, p2, p3])
