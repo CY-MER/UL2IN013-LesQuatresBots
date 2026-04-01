@@ -42,23 +42,23 @@ class SimulationController:
             self.en_pause_rotation = False
             self.step = 1
 
-        elif self.step < self.steps:
+       elif self.step < self.steps:
             distance = self.cote / self.steps
-            self.robot.avancer(distance, dt=1.0)
 
             #vérifier la collision 
+            old_x, old_y, _, _ = self.robot.get_location()
+            self.robot.avancer(distance, dt=1.0)
             for obstacle in self.obstacles:
                 if obstacle.collision(self.robot):
+                    self.robot.x = old_x
+                    self.robot.y = old_y
                     self.robot.vitesse = 0
-                    self.side = 4
+                    self.robot.tourner(180)
+                    print("Collision !")
                     return 
         
             self.points.append((self.robot.x, self.robot.y))
             self.step += 1
-
-        else:
-            self.step = 0
-            self.side += 1
 
     def get_robot_info(self):
         """Retourne les infos utiles pour l'affichage"""
