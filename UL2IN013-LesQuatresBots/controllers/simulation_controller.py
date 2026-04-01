@@ -16,9 +16,9 @@ class SimulationController:
 
 
         self.obstacles = [
-            Obstacle("cercle", (100, 100, 20)),
-            Obstacle("rectangle", (180, 290, 60, 30)),
-            Obstacle("triangle", ((300, 300), (340, 260), (360, 320))),
+            Obstacle("cercle", (100, 100, 20), couleur=(255,0,0)),        # rouge
+            Obstacle("rectangle", (180, 290, 60, 30), couleur=(0,255,0)), # vert
+            Obstacle("triangle", ((300, 300), (340, 260), (360, 320)), couleur=(0,0,255)), # bleu
         ]
 
         # paramètres du carré
