@@ -6,7 +6,8 @@ class Obstacle:
     """ Obstacle : rectangle, cercle ou triangle """
     def __init__(self, type_obj, data, couleur=(120,120,120)):
         self.type = type_obj   # "rectangle", "cercle", "triangle"
-        self.data = data       
+        self.data = data
+        self.couleur = couleur
 
     def collision(self, robot):
         """ Retourne True si un des points du robot est dans l'obstacle """
