@@ -4,7 +4,7 @@ from .point import Point
 
 class Obstacle:
     """ Obstacle : rectangle, cercle ou triangle """
-    def __init__(self, type_obj, data):
+    def __init__(self, type_obj, data, couleur=(120,120,120)):
         self.type = type_obj   # "rectangle", "cercle", "triangle"
         self.data = data       
 
