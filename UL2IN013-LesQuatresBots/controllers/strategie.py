@@ -84,20 +84,18 @@ class Carre(Strategie):
         self.strategie_courante = Avancer(cote, pas)
         self.terminee = False
 
-    def update(self, robot):
+ def update(self, robot, obstacles=None):
         if self.terminee:
             return
 
-        self.strategie_courante.update(robot)
+        self.strategie_courante.update(robot, obstacles)
 
         if self.strategie_courante.terminee:
             if self.phase == "avance":
                 self.phase = "tourne"
                 self.strategie_courante = Tourner(90, self.pas_angle)
-
             elif self.phase == "tourne":
                 self.cote_actuel += 1
-
                 if self.cote_actuel >= 4:
                     self.terminee = True
                 else:
