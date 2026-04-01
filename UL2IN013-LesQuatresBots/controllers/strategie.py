@@ -20,6 +20,8 @@ class Avancer(Strategie):
 
         if self.distance_parcourue < self.distance:
             deplacement = min(self.pas, self.distance - self.distance_parcourue)
+            # sauvegarder position avant déplacement
+            old_x, old_y, _, _ = robot.get_location()
             robot.avancer(deplacement)
             self.distance_parcourue += deplacement
         else:
