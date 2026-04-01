@@ -29,19 +29,7 @@ class RobotVecteur:
         self.vitesse = dist / dt
         self.position.x = round(self.position.x, 4)
         self.position.y = round(self.position.y, 4)
-
-    def maj_vitesse(self, dt: float):
-        if self._temps_restant <= 0:
-            self.vitesse = 0.0
-            return
-
-        dt_eff = min(dt, self._temps_restant)
-        deplacement = self.direction.echelle(self.vitesse * dt_eff)
-        self.position = self.position.ajouter(deplacement)
-        self._temps_restant -= dt_eff
-        self.position.x = round(self.position.x, 4)
-        self.position.y = round(self.position.y, 4)
-
+        
     def set_vitesse_roues(self, vg:float , vd:float):
         self.vitesse_rd = vd
         self.vitesse_rg = vg
