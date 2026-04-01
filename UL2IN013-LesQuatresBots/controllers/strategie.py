@@ -23,6 +23,14 @@ class Avancer(Strategie):
             # sauvegarder position avant déplacement
             old_x, old_y, _, _ = robot.get_location()
             robot.avancer(deplacement)
+            for obstacle in self.obstacles:
+                if obstacle.collision(self.robot):
+                    self.robot.x = old_x
+                    self.robot.y = old_y
+                    self.robot.vitesse = 0
+                    self.robot.tourner(180)
+                    print("Collision !")
+                    return 
             self.distance_parcourue += deplacement
         else:
             self.terminee = True
