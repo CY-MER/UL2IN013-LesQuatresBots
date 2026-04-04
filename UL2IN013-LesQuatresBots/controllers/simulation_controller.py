@@ -4,7 +4,7 @@ from models.obstacle import Obstacle
 class SimulationController: 
     """gère uniquement l'etat et l'evolution de la simulation"""
 
-    def __init__(self, width=400, height=400):
+    def __init__(self, width=600, height=600):
         self.width = width
         self.height = height
         self.reset()
@@ -42,7 +42,7 @@ class SimulationController:
             self.en_pause_rotation = False
             self.step = 1
 
-       elif self.step < self.steps:
+        elif self.step < self.steps:
             distance = self.cote / self.steps
 
             #vérifier la collision 
