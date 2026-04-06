@@ -1,72 +1,84 @@
-"""Classe Robot"""
+"""Robot avec vecteurs"""
 import math
+from .vecteur2D import Vecteur2D
+from .point import Point
 
 
 class Robot:
-    """Robot mobile"""
+    """Version avec vecteurs pour les deplacements"""
 
     def __init__(self, x: float = 0.0, y: float = 0.0, rot: int = 0,
                  rot_tete: int = 0, sens: float = 10.0):
-        self.x = x
-        self.y = y
-        self.vitesse = 0.0
+        self.position = Point(x, y)
         self.rotation = rot % 360
-        self.rotation_tete = rot_tete % 360
+        self.direction = Vecteur2D(
+            math.cos(math.radians(rot)),
+            math.sin(math.radians(rot))
+        )
+        self.rotation_tete = rot_tete
         self.portee_capteur = sens
-        self._temps_restant = 0.0
 
-    def avancer(self, distance: float, dt: float = 1.0):
-        """Fait avancer le robot"""
-        rad = math.radians(self.rotation)
-        self.x += distance * math.cos(rad)
-        self.y += distance * math.sin(rad)
-        self.vitesse = distance / dt if dt > 0 else 0
-        # nettoyer les erreurs de calcul
-        self.x = round(self.x, 4)
-        self.y = round(self.y, 4)
-
-    def reculer(self, distance: float, dt: float = 1.0):
-        """Fait reculer le robot"""
-        self.avancer(-distance, dt)
-
-    def tourner(self, angle: int):
-        """Fait tourner le robot"""
         self.vitesse = 0.0
-        self.rotation = (self.rotation + angle) % 360
+        self.vitesse_rd = 0.0
+        self.vitesse_rg = 0.0
 
-    def tourner_tete(self, angle: int):
-        """Tourne la tete du robot"""
-        self.rotation_tete = (self.rotation_tete + angle) % 360
+    def avancer(self, vitesse: float):
+        """ commande d'anvance : les deux roues a la meme vitesse """
+        self.vitesse_rd = vitesse
+        self.vitesse_rg = vitesse 
 
-    def maj_vitesse(self, dt: float):
-        """MAJ position selon vitesse"""
-        if self._temps_restant <= 0:
-            self.vitesse = 0.0
-            return
+    def tourner(self, vitesse: float):
+        """commande de rotation : les deux roues a des vitesses opposées"""
+        self.vitesse_rd = -vitesse 
+        self.vitesse_rg = vitesse 
 
-        dt_effectif = min(dt, self._temps_restant)
-        rad = math.radians(self.rotation)
+    def stop (self):
+        """arrete du robot : vitesse des roues nulle """
+        self.vitesse_rd = 0.0
+        self.vitesse_rg = 0.0
+        self.vitesse = 0.0
 
-        self.x += self.vitesse * math.cos(rad) * dt_effectif
-        self.y += self.vitesse * math.sin(rad) * dt_effectif
-        self._temps_restant -= dt_effectif
+    def set_vitesse_roues(self, vg:float , vd:float):
+        self.vitesse_rd = vd
+        self.vitesse_rg = vg
 
-        self.x = round(self.x, 4)
-        self.y = round(self.y, 4)
+    def update(self, dt:float=1.0):
+        """mise a jour de la positio et la rotation selon les vitesses des roues"""
+        self.vitesse = (self.vitesse_rd + self.vitesse_rg) / 2
+
+        rotation_change = (self.vitesse_rg - self.vitesse_rd) * dt * 2 # transforme la difference entre les roues en rotation du robot 
+        self.rotation =(self.rotation +rotation_change) % 360
+
+        self.direction = Vecteur2D( 
+            math.cos(math.radians(self.rotation)),
+            math.sin(math.radians(self.rotation))
+         )
+        deplacement = self.direction.echelle(self.vitesse * dt)
+        self.position = self.position.ajouter(deplacement)
+
+        self.position.x = round(self.position.x, 4)
+        self.position.y = round(self.position.y, 4)
 
     def get_location(self):
-        """Renvoie position du robot"""
-        return self.x, self.y, self.rotation, self.vitesse
+        return (
+            self.position.x,
+            self.position.y,
+            self.rotation,
+            self.vitesse
+        )
 
     def get_cible_capteur(self):
-        """Calcule la position du capteur"""
-        rotation_totale = (self.rotation + self.rotation_tete) % 360
-        rad = math.radians(rotation_totale)
-        cible_x = self.x + self.portee_capteur * math.cos(rad)
-        cible_y = self.y + self.portee_capteur * math.sin(rad)
+        direction_capteur = self.direction.tourne(self.rotation_tete)
+        cible = self.position.ajouter(
+            direction_capteur.echelle(self.portee_capteur)
+        )
+        return round(cible.x, 4), round(cible.y, 4)
+    
+    def points(self):
+        """retourne la liste des points du corps du robot"""
+        return [(self.position.x, self.position.y)]
 
-        return round(cible_x, 4), round(cible_y, 4)
 
-    def __repr__(self):
-        return (f"Robot(x={self.x:.2f}, y={self.y:.2f}, "
-                f"rot={self.rotation}, v={self.vitesse:.2f})")
+
+
+
