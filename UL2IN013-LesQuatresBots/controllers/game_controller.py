@@ -33,12 +33,14 @@ class GameController:
 
         while self.running:
             self.handle_events()
+
+            #update la simualtion 
             self.simulation.update()
 
+            #affichage 
             data = self.simulation.get_robot_info()
             self.view.render_simulation(data)
 
-            self.view.delay(100)
             self.view.tick(60)
 
         self.view.quit()
