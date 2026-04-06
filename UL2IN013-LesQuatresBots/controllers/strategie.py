@@ -13,43 +13,52 @@ class Avancer(Strategie):
     def __init__(self, distance, pas=5):
         self.distance = distance
         self.pas = pas
-        self.positions_depart = None 
+        self.position_depart = None 
+        self.distance_parcourue = 0.0
 
-    def update(self, robot, dt):
-        if self.positions_depart is None:
-            self.positions_depart = (robot.position.x , robot.position.y)
+    def update(self, robot):
+        if self.position_depart is None:
+            self.position_depart = (robot.position.x , robot.position.y)
 
-        x0 ,y0 = self.positions_depart
-        x , y = robot.position.x , robot.posotion.y
+        x0 ,y0 = self.position_depart
+        x , y = robot.position.x , robot.position.y
 
-        distance_parcourue = math.sqrt((x-x0)**2 + (y-y0)**2)
+        self.distance_parcourue = math.sqrt((x-x0)**2 + (y-y0)**2)
 
-        if distance_parcourue >= self.distance:
+        if self.distance_parcourue >= self.distance:
             robot.stop()
             return 
         
-        robot.avancer(self.vitesse)
-        
+        robot.avancer(self.pas)
+
+    def fini(self):
+        return self.distance_parcourue >= self.distance 
 
 class Tourner(Strategie):
     """Fait tourner le robot d'un angle donné, petit à petit"""
 
-    def __init__(self, angle, vitesse):
+    def __init__(self, angle, vitesse=0.3):
         self.angle = angle
         self.vitesse = vitesse
         self.rotation_depart = None 
+        self.rotationfinale = 0.0
 
     def update(self, robot):
-        if self.position_depart is None :
+        if self.rotation_depart is None :
             self.rotation_depart = (robot.rotation)
 
-        rotation = abs(robot.rotation - self.rotation_depart)
+        self.rotationfinale = (robot.rotation - self.rotation_depart) % 360
 
-        if rotation >= self.angle:
+        if self.rotationfinale >= self.angle:
             robot.stop()
             return 
         
         robot.tourner(self.vitesse)
+
+    def fini(self):
+        return self.rotationfinale >= self.angle
+        
+    
 
 class Stop(Strategie):
     """Arrête le robot"""
@@ -64,11 +73,6 @@ class StratSequence(Strategie):
         self.strategies = strategies
         self.index = 0
 
-    def start(self, robot):
-        self.index = 0
-        if self.strategies:
-            self.strategies[0].start(robot)
-
     def update(self, robot):
         # verifier si les strategies sont terminés 
         if self.fini():
@@ -79,8 +83,6 @@ class StratSequence(Strategie):
 
         if strat.fini():
             self.index += 1
-            if not self.fini():
-                self.strategies[self.index].start(robot)
 
     def fini(self):
         return self.index >= len(self.strategies)
@@ -90,7 +92,7 @@ class StratSequence(Strategie):
 class Carre(StratSequence):
     """ fait un carré"""
     def __init__(self,cote):
-        strategies = [
+        super().__init__([
             Avancer(cote),
             Tourner(90),
             Avancer(cote),
@@ -99,7 +101,6 @@ class Carre(StratSequence):
             Tourner(90),
             Avancer(cote),
             Tourner(90),
-        ]
-        super().__init__(strategies)
+        ])
 
 
