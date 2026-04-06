@@ -1,5 +1,6 @@
 from models import Robot 
 from models.obstacle import Obstacle 
+from .strategie import Carre , Stop 
 
 class SimulationController: 
     """gère uniquement l'etat et l'evolution de la simulation"""
@@ -12,53 +13,35 @@ class SimulationController:
     def reset(self):
         """Réinitialise la simulation"""
         self.robot = Robot(self.width // 2, self.height // 2)
-        self.points = [(self.robot.x, self.robot.y)]
+        self.points = [(self.robot.position.x, self.robot.position.y)]
 
 
         self.obstacles = [
-            Obstacle("cercle", (100, 100, 20), couleur=(255,0,0)),        # rouge
-            Obstacle("rectangle",(180, 290, 60, 30), couleur=(0,255,0)), # vert
-            Obstacle("triangle", ((300, 300), (340, 260), (360, 320)), couleur=(0,0,255)), # bleu
+            Obstacle("cercle", (100, 100, 20), couleur=(255,0,0)),# rouge
+            Obstacle("rectangle",(180, 290, 60, 30), couleur=(0,255,0)),# vert
+            Obstacle("triangle", ((300, 300), (340, 260), (360, 320)), couleur=(0,0,255)),# bleu
         ]
 
-        # paramètres du carré
-        self.cote = 100
-        self.steps = 40
-        self.side = 0
-        self.step = 0
-        self.en_pause_rotation = False
-
+        self.strategie = Carre(100)
     def update(self):
         """Met à jour la simulation"""
-        if self.side >= 4:
-            return
+        old_x, old_y = self.robot.position.x, self.robot.position.y
 
-        if self.step == 0 and not self.en_pause_rotation:
-            self.robot.tourner(90)
-            self.robot.vitesse = 0.0
-            self.en_pause_rotation = True
+        self.strategie.update(self.robot) # update les strategie 
+        self.robot.update() # update la position du robot 
 
-        elif self.en_pause_rotation:
-            self.en_pause_rotation = False
-            self.step = 1
-
-        elif self.step < self.steps:
-            distance = self.cote / self.steps
-
-            #vérifier la collision 
-            old_x, old_y, _, _ = self.robot.get_location()
-            self.robot.avancer(distance, dt=1.0)
-            for obstacle in self.obstacles:
-                if obstacle.collision(self.robot):
-                    self.robot.x = old_x
-                    self.robot.y = old_y
-                    self.robot.vitesse = 0
-                    self.robot.tourner(180)
-                    print("Collision !")
-                    return 
+        for obstacle in self.obstacles: # gere les obstacle (monde)
+            if obstacle.collision(self.robot):
+                self.robot.position.x = old_x
+                self.robot.position.y = old_y
+                self.robot.stop()
+                self.strategie = Stop()
+                print("Collision !")
+                
+                return 
         
-            self.points.append((self.robot.x, self.robot.y))
-            self.step += 1
+        self.points.append((self.robot.position.x, self.robot.position.y))
+            
 
     def get_robot_info(self):
         """Retourne les infos utiles pour l'affichage"""
