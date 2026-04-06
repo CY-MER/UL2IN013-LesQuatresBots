@@ -58,32 +58,48 @@ class Stop(Strategie):
         robot.stop()
 
 
-class Carre(Strategie):
-    """Fait faire un carré au robot"""
+class StratSequence(Strategie):
+    """ Execute une liste de strategie de maniére séquentielle """
+    def __init__(self, strategies):
+        self.strategies = strategies
+        self.index = 0
 
-    def __init__(self, cote, pas=5, pas_angle=5):
-        self.cote = cote
-        self.pas = pas
-        self.pas_angle = pas_angle
-        self.cote_actuel = 0
-        self.phase = "avance"
-        self.strategie_courante = Avancer(cote, pas)
-        self.terminee = False
-        
-    def update(self, robot, obstacles=None):
-        if self.terminee:
+    def start(self, robot):
+        self.index = 0
+        if self.strategies:
+            self.strategies[0].start(robot)
+
+    def update(self, robot):
+        # verifier si les strategies sont terminés 
+        if self.fini():
             return
+        
+        strat = self.strategies[self.index]
+        strat.update(robot)
 
-        self.strategie_courante.update(robot, obstacles)
+        if strat.fini():
+            self.index += 1
+            if not self.fini():
+                self.strategies[self.index].start(robot)
 
-        if self.strategie_courante.terminee:
-            if self.phase == "avance":
-                self.phase = "tourne"
-                self.strategie_courante = Tourner(90, self.pas_angle)
-            elif self.phase == "tourne":
-                self.cote_actuel += 1
-                if self.cote_actuel >= 4:
-                    self.terminee = True
-                else:
-                    self.phase = "avance"
-                    self.strategie_courante = Avancer(self.cote, self.pas)
+    def fini(self):
+        return self.index >= len(self.strategies)
+
+
+
+class Carre(StratSequence):
+    """ fait un carré"""
+    def __init__(self,cote):
+        strategies = [
+            Avancer(cote),
+            Tourner(90),
+            Avancer(cote),
+            Tourner(90),
+            Avancer(cote),
+            Tourner(90),
+            Avancer(cote),
+            Tourner(90),
+        ]
+        super().__init__(strategies)
+
+
