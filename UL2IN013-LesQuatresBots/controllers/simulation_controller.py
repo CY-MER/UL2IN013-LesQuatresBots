@@ -1,6 +1,6 @@
 from models import Robot 
 from models.obstacle import Obstacle 
-from .strategie import Carre , Stop 
+from .strategie import StratSequence, Stop , Avancer , Tourner  
 
 class SimulationController: 
     """gère uniquement l'etat et l'evolution de la simulation"""
@@ -22,7 +22,16 @@ class SimulationController:
             Obstacle("triangle", ((300, 300), (340, 260), (360, 320)), couleur=(0,0,255)),# bleu
         ]
 
-        self.strategie = Carre(100)
+        self.strategie = StratSequence([
+            Avancer(100),
+            Tourner(90),
+            Avancer(100),
+            Tourner(90),
+            Avancer(100),
+            Tourner(90),
+            Avancer(100),
+            Tourner(90),
+        ])
     def update(self):
         """Met à jour la simulation"""
         old_x, old_y = self.robot.position.x, self.robot.position.y
