@@ -27,7 +27,7 @@ class SimulationController:
         """Met à jour la simulation"""
         old_x, old_y = self.robot.position.x, self.robot.position.y
 
-        self.strategie.update(self.robot) # update les strategie 
+        self.strategie.update(self.robot, self.obstacles) # update les strategie 
         self.robot.update() # update la position du robot 
 
         for obstacle in self.obstacles: # gere les obstacle (monde)
