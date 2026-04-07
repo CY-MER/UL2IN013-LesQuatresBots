@@ -12,7 +12,7 @@ class GameView:
         self.height = height
         self.screen = pygame.display.set_mode((width, height))
         pygame.display.set_caption(title)
-        self.font = pygame.font.Font(None, 24)
+        self.font = pygame.font.Font(None, 20)
         self.clock = pygame.time.Clock()
 
     def clear(self, color=None):
@@ -55,7 +55,7 @@ class GameView:
 
     def draw_robot(self, x, y, angle=0, radius=5, color=(0, 0, 255)):
         pygame.draw.circle(self.screen, color, (int(x), int(y)), radius)
-
+        
         # direction
         longueur = 15
         dx = longueur * math.cos(math.radians(angle))
