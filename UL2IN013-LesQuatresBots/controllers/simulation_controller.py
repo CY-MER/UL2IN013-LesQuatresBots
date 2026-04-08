@@ -50,16 +50,17 @@ class SimulationController:
                 return 
         
         self.points.append((self.robot.position.x, self.robot.position.y))
+        
             
 
     def get_robot_info(self):
         """Retourne les infos utiles pour l'affichage"""
-        x, y, angle, vitesse = self.robot.get_location()
+        x, y, angle, vitesse , path = self.robot.get_location()
         return {
             "x": x,
             "y": y,
             "angle": angle,
             "vitesse": vitesse,
-            "points": self.points,
+            "path": path,
             "obstacles": self.obstacles,
         }

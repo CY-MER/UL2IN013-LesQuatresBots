@@ -3,7 +3,7 @@
 import pygame
 
 from controllers.simulation_controller import SimulationController
-from views import GameView
+from views import GameView 
 
 
 class GameController:
@@ -40,6 +40,7 @@ class GameController:
             #affichage 
             data = self.simulation.get_robot_info()
             self.view.render_simulation(data)
+           
 
             self.view.tick(60)
 

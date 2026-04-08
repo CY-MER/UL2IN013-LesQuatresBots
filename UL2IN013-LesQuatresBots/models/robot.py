@@ -20,7 +20,8 @@ class Robot:
 
         self.vitesse = 0.0
         self.vitesse_rd = 0.0
-        self.vitesse_rg = 0.0
+        self.vitesse_rg = 0.0 
+        self.path = []
 
     def avancer(self, vitesse: float):
         """ commande d'anvance : les deux roues a la meme vitesse """
@@ -58,13 +59,17 @@ class Robot:
 
         self.position.x = round(self.position.x, 4)
         self.position.y = round(self.position.y, 4)
+        
+
+        self.path.append((self.position.x, self.position.y))
 
     def get_location(self):
         return (
             self.position.x,
             self.position.y,
             self.rotation,
-            self.vitesse
+            self.vitesse,
+            self.path
         )
 
     def get_cible_capteur(self):

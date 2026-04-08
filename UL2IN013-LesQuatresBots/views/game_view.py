@@ -28,7 +28,7 @@ class GameView:
         for y in range(0, self.height, cell_size):
             pygame.draw.line(self.screen, color, (0, y), (self.width, y), 1)
 
-    def draw_path(self, points, color=(255, 0, 0), width=2):
+    def draw_path(self, points, color=(0, 0, 255), width=2):
         """Dessine le chemin du robot"""
         if len(points) > 1:
             pygame.draw.lines(
@@ -88,7 +88,7 @@ class GameView:
         self.clear()
         self.draw_grid()
         self.draw_obstacles(simulation_data["obstacles"])
-        self.draw_path(simulation_data["points"])
+        self.draw_path(simulation_data["path"])
         self.draw_robot(simulation_data["x"], simulation_data["y"], simulation_data["angle"])
         self.draw_info(
             simulation_data["x"],
@@ -103,6 +103,7 @@ class GameView:
         """Affiche du texte"""
         surface = self.font.render(text, True, color)
         self.screen.blit(surface, (x, y))
+
 
     def update(self):
         """MAJ affichage"""
