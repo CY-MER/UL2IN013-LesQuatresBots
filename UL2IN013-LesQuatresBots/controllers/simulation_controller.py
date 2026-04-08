@@ -51,23 +51,41 @@ class SimulationController:
 
 
     def update(self):
-        """Met à jour la simulation"""
-        old_x, old_y = self.robot.position.x, self.robot.position.y
+        old_x1, old_y1 = self.robot1.position.x, self.robot1.position.y
+        old_x2, old_y2 = self.robot2.position.x, self.robot2.position.y
 
-        self.strategie.update(self.robot) # update les strategie 
-        self.robot.update() # update la position du robot 
+    # mise à jour indépendante
+    self.strategie1.update(self.robot1)
+    self.strategie2.update(self.robot2)
 
-        for obstacle in self.obstacles: # gere les obstacle (monde)
-            if obstacle.collision(self.robot):
-                self.robot.position.x = old_x
-                self.robot.position.y = old_y
-                self.robot.stop()
-                self.strategie = Stop()
-                print("Collision !")
-                
-                return 
-        if self.robot.dessine:
-            self.points.append((self.robot.position.x, self.robot.position.y))
+    self.robot1.update()
+    self.robot2.update()
+
+    # gestion collisions (robot1)
+    for obstacle in self.obstacles:
+        if obstacle.collision(self.robot1):
+            self.robot1.position.x = old_x1
+            self.robot1.position.y = old_y1
+            self.robot1.stop()
+            self.strategie1 = Stop()
+            print("Collision robot 1")
+            return
+
+    # gestion collisions (robot2)
+    for obstacle in self.obstacles:
+        if obstacle.collision(self.robot2):
+            self.robot2.position.x = old_x2
+            self.robot2.position.y = old_y2
+            self.robot2.stop()
+            self.strategie2 = Stop()
+            print("Collision robot 2")
+            return
+
+    if self.robot1.dessine:
+        self.points1.append((self.robot1.position.x, self.robot1.position.y))
+
+    if self.robot2.dessine:
+        self.points2.append((self.robot2.position.x, self.robot2.position.y))
             
 
     def get_robot_info(self):
