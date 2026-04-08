@@ -88,7 +88,7 @@ class GameView:
         self.clear()
         self.draw_grid()
         self.draw_obstacles(simulation_data["obstacles"])
-        self.draw_path(simulation_data["path"])
+        self.draw_path(simulation_data["path"] , simulation_data["couleur"])
         self.draw_robot(simulation_data["x"], simulation_data["y"], simulation_data["angle"])
         self.draw_info(
             simulation_data["x"],

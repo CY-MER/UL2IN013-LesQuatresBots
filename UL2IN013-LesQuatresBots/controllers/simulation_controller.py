@@ -14,6 +14,7 @@ class SimulationController:
         """Réinitialise la simulation"""
         self.robot = Robot (65, self.height - 65 )
         self.robot.dessine_trace(True)
+        self.robot.set_couleur((0,255,0)) #vert 
         self.points = [(self.robot.position.x, self.robot.position.y)]
 
 
@@ -56,12 +57,14 @@ class SimulationController:
 
     def get_robot_info(self):
         """Retourne les infos utiles pour l'affichage"""
-        x, y, angle, vitesse , path = self.robot.get_location()
+        x, y, angle, vitesse , path , couleur = self.robot.get_location()
         return {
             "x": x,
             "y": y,
             "angle": angle,
             "vitesse": vitesse,
             "path": path,
+            "couleur" : couleur, 
             "obstacles": self.obstacles,
+            
         }

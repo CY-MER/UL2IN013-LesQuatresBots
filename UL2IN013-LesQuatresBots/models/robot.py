@@ -23,6 +23,7 @@ class Robot:
         self.vitesse_rg = 0.0 
         self.path = []
         self.dessine = False 
+        self.change_couleur = (0,0,255)
 
     def avancer(self, vitesse: float):
         """ commande d'anvance : les deux roues a la meme vitesse """
@@ -46,6 +47,9 @@ class Robot:
 
     def dessine_trace(self, valeur):
         self.dessine = valeur
+
+    def set_couleur(self, couleur):
+        self.change_couleur = couleur 
 
     def update(self, dt:float=1.0):
         """mise a jour de la positio et la rotation selon les vitesses des roues"""
@@ -73,7 +77,8 @@ class Robot:
             self.position.y,
             self.rotation,
             self.vitesse,
-            self.path
+            self.path,
+            self.change_couleur
         )
 
     def get_cible_capteur(self):
