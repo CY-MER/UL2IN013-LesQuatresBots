@@ -31,7 +31,7 @@ class SimulationController:
             Obstacle("rectangle", (100, 300, 60,30), couleur=(0,0,255)),# bleu
         ]
 
-        self.strategie = StratSequence([
+        self.strategies = [StratSequence([
             Avancer(100),
             Tourner(90),
             Avancer(100),
@@ -40,23 +40,33 @@ class SimulationController:
             Tourner(90),
             Avancer(100),
             Tourner(90),
-        ])
+        ]),
+
+        StratSequence([
+            Avancer(150),
+            Tourner (180),
+            Avancer (150),
+            Tourner(180),
+        ])]
+
+
     def update(self):
         """Met à jour la simulation"""
-        old_x, old_y = self.robot.position.x, self.robot.position.y
+        for i, robot in enumerate(self.robots):
 
-        self.strategie.update(self.robot) # update les strategie 
-        self.robot.update() # update la position du robot 
+            old_x, old_y = robot.position.x, robot.position.y
 
-        for obstacle in self.obstacles: # gere les obstacle (monde)
-            if obstacle.collision(self.robot):
-                self.robot.position.x = old_x
-                self.robot.position.y = old_y
-                self.robot.stop()
-                self.strategie = Stop()
-                print("Collision !")
-                
-                return 
+            self.strategies[i].update(robot)
+            robot.update()
+
+            for obstacle in self.obstacles:
+                if obstacle.collision(robot):
+                    robot.position.x = old_x
+                    robot.position.y = old_y
+                    robot.stop()
+                    self.strategies[i] = Stop()
+                    print("Collision !")
+                    return
         
         self.points.append((self.robot.position.x, self.robot.position.y))
         
