@@ -52,8 +52,8 @@ class GameView:
                 p1, p2, p3 = obstacle.data
                 pygame.draw.polygon(self.screen, color, [p1, p2, p3])
         
-
-    def draw_robot(self, x, y, angle=0, radius=5, color=(0, 0, 255)):
+    #changement de la couleur du robot pour le destinguer de son path 
+    def draw_robot(self, x, y, angle=0, radius=5, color=(255, 255, 0)):
         pygame.draw.circle(self.screen, color, (int(x), int(y)), radius)
         
         # direction

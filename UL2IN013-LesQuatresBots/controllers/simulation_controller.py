@@ -15,9 +15,9 @@ class SimulationController:
         self.robot = Robot(self.width // 2, self.height // 2)
         self.points = [(self.robot.position.x, self.robot.position.y)]
 
-
+        
         self.obstacles = [
-            Obstacle("cercle", (100, 100, 20), couleur=(255,0,0)),# rouge
+            Obstacle("cercle", (80, 80, 50), couleur=(255,0,0)),# rouge
             Obstacle("rectangle",(180, 290, 60, 30), couleur=(0,255,0)),# vert
             Obstacle("triangle", ((300, 300), (340, 260), (360, 320)), couleur=(0,0,255)),# bleu
         ]
