@@ -12,7 +12,7 @@ class SimulationController:
 
     def reset(self):
         """Réinitialise la simulation"""
-        self.robot = Robot(self.width // 2, self.height // 2)
+        self.robot = Robot(0 , 350) # position de départ du robot
         self.points = [(self.robot.position.x, self.robot.position.y)]
 
         

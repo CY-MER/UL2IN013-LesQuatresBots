@@ -63,7 +63,7 @@ class GameView:
 
         pygame.draw.line(
             self.screen,
-            (0, 0, 0),
+            (0, 0, 255),# bleu pour le crayon du robot
             (int(x), int(y)),
             (int(x + dx), int(y + dy)),
             2
