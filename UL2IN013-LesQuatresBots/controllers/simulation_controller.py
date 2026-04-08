@@ -15,7 +15,9 @@ class SimulationController:
         self.robot = Robot(0 , 350) # position de départ du robot
         self.dessin = False # dessine le chemin du robot ou pas
         self.points = [(self.robot.position.x, self.robot.position.y)]
-
+        self.robot.dessine_trace(False) # active ou désactive le dessin
+        self.path = []
+        self.robot_set_couleur = (255, 255, 0) # jaune
         
         self.obstacles = [
             Obstacle("cercle", (200, 200, 30), couleur=(255,0,0)),# rouge
@@ -53,5 +55,8 @@ class SimulationController:
             "angle": angle,
             "vitesse": vitesse,
             "points": self.points,
+            "path": self.robot.path,
+            "couleur" : self.robot.couleur,
             "obstacles": self.obstacles,
+            "couleur" : self.robot.couleur
         }

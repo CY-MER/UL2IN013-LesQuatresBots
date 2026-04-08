@@ -8,7 +8,7 @@ class Robot:
     """Version avec vecteurs pour les deplacements"""
 
     def __init__(self, x: float = 0.0, y: float = 0.0, rot: int = 0,
-                 rot_tete: int = 0, sens: float = 10.0):
+                 rot_tete: int = 0, sens: float = 10.0,dessine=False,couleur=(255,255,0)):
         self.position = Point(x, y)
         self.rotation = rot % 360
         self.direction = Vecteur2D(
@@ -21,7 +21,10 @@ class Robot:
         self.vitesse = 0.0
         self.vitesse_rd = 0.0
         self.vitesse_rg = 0.0
-
+        self.dessine = False
+        self.path = []
+        self.couleur = (255, 255, 0) # jaune
+    
     def avancer(self, vitesse: float):
         """ commande d'anvance : les deux roues a la meme vitesse """
         self.vitesse_rd = vitesse
@@ -41,6 +44,10 @@ class Robot:
     def set_vitesse_roues(self, vg:float , vd:float):
         self.vitesse_rd = vd
         self.vitesse_rg = vg
+
+    def set_couleur(self, couleur):
+        self.change_couleur = couleur 
+
     def dessine_trace(self, valeur):
         self.dessine = valeur
     def update(self, dt:float=1.0):
