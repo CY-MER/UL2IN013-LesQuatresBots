@@ -1,0 +1,30 @@
+👉 “La vue gère l’affichage → couleurs”
+👉 “Le controller gère la logique → obstacles”
+👉 “Le temps se calcule côté controller et s’affiche côté vue”
+1. Changer la couleur du robot :
+dans fichier : views/game_view.py
+ici : def draw_robot(self, x, y, radius=5, color=(255, 0, 0)):  # rouge
+
+2. Transformer un rectangle en triangle :
+dans fichier : controllers/simulation_controller.py
+Obstacle("rectangle", (180, 290, 60, 30), couleur=(0,255,0))
+Obstacle("triangle", ((180, 290), (240, 290), (210, 260)), couleur=(0,255,0))
+
+3. Ajouter un timer :
+dans fichier : controllers/game_controller.py
+Dans __init__ : 
+import time
+self.start_time = time.time()
+Dans la boucle run() : temps = int(time.time() - self.start_time)
+data["temps"] = temps
+dans fichier : views/game_view.py 
+def draw_info(self, x, y, angle, vitesse, temps=0):
+f"Temps: {temps}s"
+Et dans render_simulation : 
+self.draw_info(
+    simulation_data["x"],
+    simulation_data["y"],
+    simulation_data["angle"],
+    simulation_data["vitesse"],
+    simulation_data.get("temps", 0)
+)
