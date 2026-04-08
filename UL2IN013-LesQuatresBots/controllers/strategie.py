@@ -88,5 +88,51 @@ class StratSequence(Strategie):
         return self.index >= len(self.strategies)
 
 
+class ChangeCouleur(Strategie):
+    """Change la couleur de la trace"""
+
+    def __init__(self, couleur):
+        self.couleur = couleur
+        self.terminee = False
+
+    def update(self, robot):
+        robot.change_couleur(self.couleur)
+        self.terminee = True
+
+    def fini(self):
+        return self.terminee
+
+class Hexagone (Strategie):
+    "fait un hexagone "
+    def __init__(self,cote):
+        self.cote = cote
+        self.sequence = StratSequence([
+            ChangeCouleur((255,0,0)), 
+            Avancer(cote),
+            Tourner(60),
+
+            ChangeCouleur((0,255,0)), 
+            Avancer(cote),
+            Tourner(60),
+
+            ChangeCouleur((0,0,255)), 
+            Avancer(cote),
+            Tourner(60),
+
+            ChangeCouleur((255,0,0)), 
+            Avancer(cote),
+            Tourner(60),
+
+            ChangeCouleur((0,255,0)), 
+            Avancer(cote),
+            Tourner(60),
+
+            ChangeCouleur((0,0,255)), 
+            Avancer(cote),
+            Tourner(60),
+        ])
+        
+
+
 
 
