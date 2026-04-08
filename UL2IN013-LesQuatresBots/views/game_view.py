@@ -28,7 +28,7 @@ class GameView:
         for y in range(0, self.height, cell_size):
             pygame.draw.line(self.screen, color, (0, y), (self.width, y), 1)
 
-    def draw_path(self, points, color=(255, 0, 0), width=2):
+    def draw_path(self, points, color=(0, 0, 255), width=2):
         """Dessine le chemin du robot"""
         if len(points) > 1:
             pygame.draw.lines(
