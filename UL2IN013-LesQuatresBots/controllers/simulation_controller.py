@@ -23,11 +23,20 @@ class SimulationController:
         ]
 
    
-        self.robot = Robot(0, 320)  # en bas gauche
-        self.robot1 = Robot(500, 300)
-        self.robot2 = Robot(100, 300)
+      
 
-        self.strategie = Hexagone( 
+        self.robot1 = Robot(self.width - 50, self.height // 2)  # à droite
+        self.robot2 = Robot(50, self.height // 2)               # à gauche
+
+
+        self.strategie1 = StratSequence([
+            Avancer(100),
+            Tourner(90),
+            Avancer(100),
+            Tourner(90),
+            ])
+
+        self.strategie2 = Hexagone( 
             longueur=50,
             couleurs=[
             (255, 0, 0),
@@ -38,6 +47,9 @@ class SimulationController:
             (0, 255, 255)
             
         ])
+
+
+
     def update(self):
         """Met à jour la simulation"""
         old_x, old_y = self.robot.position.x, self.robot.position.y
