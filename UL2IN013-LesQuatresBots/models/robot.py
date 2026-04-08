@@ -22,6 +22,7 @@ class Robot:
         self.vitesse_rd = 0.0
         self.vitesse_rg = 0.0 
         self.path = []
+        self.dessine = False 
 
     def avancer(self, vitesse: float):
         """ commande d'anvance : les deux roues a la meme vitesse """
@@ -43,6 +44,9 @@ class Robot:
         self.vitesse_rd = vd
         self.vitesse_rg = vg
 
+    def dessine_trace(self, valeur):
+        self.dessine = valeur
+
     def update(self, dt:float=1.0):
         """mise a jour de la positio et la rotation selon les vitesses des roues"""
         self.vitesse = (self.vitesse_rd + self.vitesse_rg) / 2
@@ -60,8 +64,8 @@ class Robot:
         self.position.x = round(self.position.x, 4)
         self.position.y = round(self.position.y, 4)
         
-
-        self.path.append((self.position.x, self.position.y))
+        if self.dessine:
+            self.path.append((self.position.x, self.position.y))
 
     def get_location(self):
         return (

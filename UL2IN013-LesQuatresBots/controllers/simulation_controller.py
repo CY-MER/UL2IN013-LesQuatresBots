@@ -13,6 +13,7 @@ class SimulationController:
     def reset(self):
         """Réinitialise la simulation"""
         self.robot = Robot (65, self.height - 65 )
+        self.robot.dessine_trace(True)
         self.points = [(self.robot.position.x, self.robot.position.y)]
 
 
