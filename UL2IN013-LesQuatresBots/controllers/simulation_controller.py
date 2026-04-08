@@ -12,14 +12,14 @@ class SimulationController:
 
     def reset(self):
         """Réinitialise la simulation"""
-        self.robot = Robot(self.width // 2, self.height // 2)
+        self.robot = Robot (65, self.height - 65 )
         self.points = [(self.robot.position.x, self.robot.position.y)]
 
 
         self.obstacles = [
-            Obstacle("cercle", (100, 100, 20), couleur=(255,0,0)),# rouge
-            Obstacle("rectangle",(180, 290, 60, 30), couleur=(0,255,0)),# vert
-            Obstacle("triangle", ((300, 300), (340, 260), (360, 320)), couleur=(0,0,255)),# bleu
+            Obstacle("rectangle", (100, 100, 60, 30), couleur=(255,0,0)),# rouge
+            Obstacle("rectangle",(100, 200, 60, 30), couleur=(0,255,0)),# vert
+            Obstacle("rectangle", (100, 300, 60,30), couleur=(0,0,255)),# bleu
         ]
 
         self.strategie = StratSequence([
