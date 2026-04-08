@@ -10,6 +10,8 @@ class Robot:
     def __init__(self, x: float = 0.0, y: float = 0.0, rot: int = 0,
                  rot_tete: int = 0, sens: float = 10.0):
         self.position = Point(x, y)
+        self.dessine = False
+        self.couleur = (255,0,0)
         self.rotation = rot % 360
         self.direction = Vecteur2D(
             math.cos(math.radians(rot)),
@@ -79,6 +81,11 @@ class Robot:
         return [(self.position.x, self.position.y)]
 
 
+    def set_dessine(self, b: bool):
+        self.dessine = b
 
+
+    def change_couleur(self, c):
+        self.couleur = c
 
 

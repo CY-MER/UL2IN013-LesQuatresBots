@@ -88,5 +88,36 @@ class StratSequence(Strategie):
         return self.index >= len(self.strategies)
 
 
+#  NOUVELLE STRATÉGIE : HEXAGONE
+class Hexagone(Strategie):
+    """Dessine un hexagone avec une couleur différente à chaque côté"""
 
+    def __init__(self, longueur, couleurs):
+        self.longueur = longueur
+        self.couleurs = couleurs
+        self.cote = 0
+        self.sous_strat = None
 
+    def update(self, robot):
+        if self.sous_strat is None:
+            if self.cote >= 6:
+                robot.stop()
+                return
+
+            # changement de couleur
+            robot.change_couleur(self.couleurs[self.cote])
+
+            # avancer + tourner
+            self.sous_strat = StratSequence([
+                Avancer(self.longueur),
+                Tourner(60)
+            ])
+
+        self.sous_strat.update(robot)
+
+        if self.sous_strat.fini():
+            self.cote += 1
+            self.sous_strat = None
+
+    def fini(self):
+        return self.cote >= 6

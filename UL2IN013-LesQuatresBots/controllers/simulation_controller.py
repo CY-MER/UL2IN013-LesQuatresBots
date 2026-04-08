@@ -1,6 +1,6 @@
 from models import Robot 
 from models.obstacle import Obstacle 
-from .strategie import StratSequence, Stop , Avancer , Tourner  
+from .strategie import StratSequence, Stop , Avancer , Tourner  , Hexagone
 
 class SimulationController: 
     """gère uniquement l'etat et l'evolution de la simulation"""
@@ -17,20 +17,26 @@ class SimulationController:
 
 
         self.obstacles = [
-            Obstacle("cercle", (100, 100, 20), couleur=(255,0,0)),# rouge
-            Obstacle("rectangle",(180, 290, 60, 30), couleur=(0,255,0)),# vert
-            Obstacle("triangle", ((300, 300), (340, 260), (360, 320)), couleur=(0,0,255)),# bleu
+            Obstacle("cercle", (200, 300, 20), couleur=(255,0,0)),# rouge
+            Obstacle("cercle", (200, 100, 20), couleur=(0,255,0)),# vert
+            Obstacle("cercle", (200, 200, 20), couleur=(0,0,255)),# bleu
         ]
 
-        self.strategie = StratSequence([
-            Avancer(100),
-            Tourner(90),
-            Avancer(100),
-            Tourner(90),
-            Avancer(100),
-            Tourner(90),
-            Avancer(100),
-            Tourner(90),
+   
+        self.robot = Robot(0, 320)  # en bas gauche
+        self.robot1 = Robot(500, 300)
+        self.robot2 = Robot(100, 300)
+
+        self.strategie = Hexagone( 
+            longueur=50,
+            couleurs=[
+            (255, 0, 0),
+            (0, 255, 0),
+            (0, 0, 255),
+            (255, 255, 0),
+            (255, 255, 0),
+            (0, 255, 255)
+            
         ])
     def update(self):
         """Met à jour la simulation"""
@@ -48,8 +54,8 @@ class SimulationController:
                 print("Collision !")
                 
                 return 
-        
-        self.points.append((self.robot.position.x, self.robot.position.y))
+        if self.robot.dessine:
+            self.points.append((self.robot.position.x, self.robot.position.y))
             
 
     def get_robot_info(self):
@@ -62,4 +68,8 @@ class SimulationController:
             "vitesse": vitesse,
             "points": self.points,
             "obstacles": self.obstacles,
+            "couleur": self.robot.couleur ,
         }
+
+   
+  
