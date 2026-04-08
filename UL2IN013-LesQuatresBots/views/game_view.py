@@ -27,10 +27,14 @@ class GameView:
             pygame.draw.line(self.screen, color, (x, 0), (x, self.height), 1)
         for y in range(0, self.height, cell_size):
             pygame.draw.line(self.screen, color, (0, y), (self.width, y), 1)
-
+            
+    def dessin(self, b):
+        """if TRUE dessine le chemin du robot, sinon ne dessine pas"""
+        self.b = b
+             
     def draw_path(self, points, color=(0, 0, 255), width=2):
         """Dessine le chemin du robot"""
-        if len(points) > 1:
+        if len(points) > 1 and self.dessin:
             pygame.draw.lines(
                 self.screen,
                 color,
@@ -88,7 +92,8 @@ class GameView:
         self.clear()
         self.draw_grid()
         self.draw_obstacles(simulation_data["obstacles"])
-        self.draw_path(simulation_data["points"])
+        if self.dessin:
+            self.draw_path(simulation_data["points"])
         self.draw_robot(simulation_data["x"], simulation_data["y"], simulation_data["angle"])
         self.draw_info(
             simulation_data["x"],

@@ -41,7 +41,8 @@ class Robot:
     def set_vitesse_roues(self, vg:float , vd:float):
         self.vitesse_rd = vd
         self.vitesse_rg = vg
-
+    def dessine_trace(self, valeur):
+        self.dessine = valeur
     def update(self, dt:float=1.0):
         """mise a jour de la positio et la rotation selon les vitesses des roues"""
         self.vitesse = (self.vitesse_rd + self.vitesse_rg) / 2
@@ -58,7 +59,9 @@ class Robot:
 
         self.position.x = round(self.position.x, 4)
         self.position.y = round(self.position.y, 4)
-
+    
+       
+            
     def get_location(self):
         return (
             self.position.x,

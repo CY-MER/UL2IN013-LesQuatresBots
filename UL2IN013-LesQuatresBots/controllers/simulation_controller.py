@@ -13,11 +13,12 @@ class SimulationController:
     def reset(self):
         """Réinitialise la simulation"""
         self.robot = Robot(0 , 350) # position de départ du robot
+        self.dessin = False # dessine le chemin du robot ou pas
         self.points = [(self.robot.position.x, self.robot.position.y)]
 
         
         self.obstacles = [
-            Obstacle("cercle", (180, 200, 30), couleur=(255,0,0)),# rouge
+            Obstacle("cercle", (200, 200, 30), couleur=(255,0,0)),# rouge
             Obstacle("rectangle",(180, 10, 60, 30), couleur=(0,255,0)),# vert
             Obstacle("rectangle", (180, 350, 60,30), couleur=(0,0,255)),# bleu
         ]
