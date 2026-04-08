@@ -38,7 +38,7 @@ class GameController:
             self.simulation.update()
 
             #affichage 
-            data = self.simulation.get_robot_info()
+            data = self.simulation.get_robots_info()
             self.view.render_simulation(data)
            
 

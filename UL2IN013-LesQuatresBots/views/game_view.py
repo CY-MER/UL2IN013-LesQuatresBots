@@ -53,21 +53,24 @@ class GameView:
                 pygame.draw.polygon(self.screen, color, [p1, p2, p3])
         
 
-    def draw_robot(self, x, y, angle=0, radius=5, color=(0, 0, 255)):
-        pygame.draw.circle(self.screen, color, (int(x), int(y)), radius)
-        
-        # direction
-        longueur = 15
-        dx = longueur * math.cos(math.radians(angle))
-        dy = longueur * math.sin(math.radians(angle))
+    def draw_robots(self, robots):
+        for data in robots:
+            x, y, angle, color = data["x"], data["y"], data["angle"], data["couleur"]
+            radius =10
+            pygame.draw.circle(self.screen, color, (int(x), int(y)), radius)
 
-        pygame.draw.line(
-            self.screen,
-            (0, 0, 0),
-            (int(x), int(y)),
-            (int(x + dx), int(y + dy)),
-            2
-        )
+            # direction
+            longueur = 15
+            dx = longueur * math.cos(math.radians(angle))
+            dy = longueur * math.sin(math.radians(angle))
+
+            pygame.draw.line(
+                self.screen,
+                (0, 0, 0),
+                (int(x), int(y)),
+                (int(x + dx), int(y + dy)),
+                2
+            )
 
    
     def draw_info(self, x, y, angle, vitesse):
@@ -88,13 +91,15 @@ class GameView:
         self.clear()
         self.draw_grid()
         self.draw_obstacles(simulation_data["obstacles"])
-        self.draw_path(simulation_data["path"] , simulation_data["couleur"])
-        self.draw_robot(simulation_data["x"], simulation_data["y"], simulation_data["angle"])
-        self.draw_info(
-            simulation_data["x"],
-            simulation_data["y"],
-            simulation_data["angle"],
-            simulation_data["vitesse"]
+        for robot_data in simulation_data["robots"]:
+            self.draw_path(robot_data["path"], robot_data["couleur"])
+        self.draw_robots(simulation_data["robots"])
+        for robot_data in simulation_data["robots"]:
+            self.draw_info(
+                robot_data["x"],
+                robot_data["y"],
+                robot_data["angle"],
+                robot_data["vitesse"]
         )
         self.update()
 
