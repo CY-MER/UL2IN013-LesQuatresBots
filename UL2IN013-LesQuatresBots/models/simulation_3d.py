@@ -2,15 +2,14 @@ from vpython import *
 from models.robot import Robot
 import math
  
-# 3D
+# La simulation
 scene.title = "Simulation Robot 3D"
 scene.width = 800
 scene.height = 600
 
-# sol
+# Le sol
 sol = box(pos=vector(0, -1, 0), size=vector(30, 0.5, 30), color=color.white)
 
-# ROBOT
 robot2D = Robot(0, 0)
 
 # objet 3D
@@ -19,14 +18,14 @@ robot3D = sphere(pos=vector(0, 0, 0), radius=0.5, color=color.blue)
 # direction du robot
 direction_arrow = arrow(pos=robot3D.pos, axis=vector(1,0,0), color=color.yellow)
 
-# OBSTACLES
+# Les obstacles 
 obstacles = [
     box(pos=vector(3, 0, 3), size=vector(2, 2, 2), color=color.red),
     box(pos=vector(-4, 0, 2), size=vector(3, 1, 2), color=color.green),
     sphere(pos=vector(2, 0, -4), radius=1, color=color.orange)
 ]
 
-# carré
+# Le carré
 cote = 100
 steps = 50
 side = 0
