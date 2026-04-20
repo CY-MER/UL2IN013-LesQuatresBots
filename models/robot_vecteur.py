@@ -10,14 +10,17 @@ class RobotVecteur:
     def __init__(self, x: float = 0.0, y: float = 0.0, rot: int = 0,
                  rot_tete: int = 0, sens: float = 10.0):
         self.position = Point(x, y)
-        self.rotation = rot
+        self.rotation = rot % 360
         self.direction = Vecteur2D(
             math.cos(math.radians(rot)),
             math.sin(math.radians(rot))
         )
         self.rotation_tete = rot_tete
         self.portee_capteur = sens
+
         self.vitesse = 0.0
+        self.vitesse_rd = 0.0
+        self.vitesse_rg = 0.0
         self._temps_restant = 0.0
 
     def avancer(self, dist: float, dt: float = 1.0):
@@ -26,16 +29,23 @@ class RobotVecteur:
         self.vitesse = dist / dt
         self.position.x = round(self.position.x, 4)
         self.position.y = round(self.position.y, 4)
+        
+    def set_vitesse_roues(self, vg:float , vd:float):
+        self.vitesse_rd = vd
+        self.vitesse_rg = vg
 
-    def maj_vitesse(self, dt: float):
-        if self._temps_restant <= 0:
-            self.vitesse = 0.0
-            return
+    def maj_vitesse(self, dt:float):
+        self.vitesse = (self.vitesse_rd + self.vitesse_rg) / 2
+        rotation_change = (self.vitesse_rd - self.vitesse_rg) * dt * 10 # transforme la difference entre les roues en rotation du robot 
+        self.rotation =(self.rotation +rotation_change) % 360
 
-        dt_eff = min(dt, self._temps_restant)
-        deplacement = self.direction.echelle(self.vitesse * dt_eff)
+        self.direction = Vecteur2D( 
+            math.cos(math.radians(self.rotation)),
+            math.sin(math.radians(self.rotation))
+         )
+        deplacement = self.direction.echelle(self.vitesse * dt)
         self.position = self.position.ajouter(deplacement)
-        self._temps_restant -= dt_eff
+
         self.position.x = round(self.position.x, 4)
         self.position.y = round(self.position.y, 4)
 
@@ -58,3 +68,12 @@ class RobotVecteur:
             direction_capteur.echelle(self.portee_capteur)
         )
         return round(cible.x, 4), round(cible.y, 4)
+    
+    def points(self):
+        """retourne la liste des points du corps du robot"""
+        return [(self.position.x, self.position.y)]
+
+
+
+
+
