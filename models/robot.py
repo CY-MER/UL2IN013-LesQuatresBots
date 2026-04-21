@@ -4,11 +4,11 @@ from .vecteur2D import Vecteur2D
 from .point import Point
 
 
-class Robot:
+class RobotVecteur:
     """Version avec vecteurs pour les deplacements"""
 
     def __init__(self, x: float = 0.0, y: float = 0.0, rot: int = 0,
-                 rot_tete: int = 0, sens: float = 10.0,dessine=False,couleur=(255,255,0)):
+                 rot_tete: int = 0, sens: float = 10.0):
         self.position = Point(x, y)
         self.rotation = rot % 360
         self.direction = Vecteur2D(
@@ -21,40 +21,22 @@ class Robot:
         self.vitesse = 0.0
         self.vitesse_rd = 0.0
         self.vitesse_rg = 0.0
-        self.dessine = False
-        self.path = []
-        self.couleur = (255, 255, 0) # jaune
-    
-    def avancer(self, vitesse: float):
-        """ commande d'anvance : les deux roues a la meme vitesse """
-        self.vitesse_rd = vitesse
-        self.vitesse_rg = vitesse 
+        self._temps_restant = 0.0
 
-    def tourner(self, vitesse: float):
-        """commande de rotation : les deux roues a des vitesses opposées"""
-        self.vitesse_rd = -vitesse 
-        self.vitesse_rg = vitesse 
-
-    def stop (self):
-        """arrete du robot : vitesse des roues nulle """
-        self.vitesse_rd = 0.0
-        self.vitesse_rg = 0.0
-        self.vitesse = 0.0
-
+    def avancer(self, dist: float, dt: float = 1.0):
+        deplacement = self.direction.echelle(dist)
+        self.position = self.position.ajouter(deplacement)
+        self.vitesse = dist / dt
+        self.position.x = round(self.position.x, 4)
+        self.position.y = round(self.position.y, 4)
+        
     def set_vitesse_roues(self, vg:float , vd:float):
         self.vitesse_rd = vd
         self.vitesse_rg = vg
 
-    def set_couleur(self, couleur):
-        self.change_couleur = couleur 
-
-    def dessine_trace(self, valeur):
-        self.dessine = valeur
-    def update(self, dt:float=1.0):
-        """mise a jour de la positio et la rotation selon les vitesses des roues"""
+    def maj_vitesse(self, dt:float):
         self.vitesse = (self.vitesse_rd + self.vitesse_rg) / 2
-
-        rotation_change = (self.vitesse_rg - self.vitesse_rd) * dt * 2 # transforme la difference entre les roues en rotation du robot 
+        rotation_change = (self.vitesse_rd - self.vitesse_rg) * dt * 10 # transforme la difference entre les roues en rotation du robot 
         self.rotation =(self.rotation +rotation_change) % 360
 
         self.direction = Vecteur2D( 
@@ -66,9 +48,12 @@ class Robot:
 
         self.position.x = round(self.position.x, 4)
         self.position.y = round(self.position.y, 4)
-    
-       
-            
+
+    def tourner(self, angle: int):
+        self.rotation = (self.rotation + angle) % 360
+        self.direction = self.direction.tourne(angle)
+        self.vitesse = 0.0
+
     def get_location(self):
         return (
             self.position.x,

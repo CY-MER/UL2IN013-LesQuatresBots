@@ -161,3 +161,5 @@ class Robot2IN013:
             :blue: composante bleu (0-255)
         """
         return self._gpg.__getattribute__(attr)
+
+  
