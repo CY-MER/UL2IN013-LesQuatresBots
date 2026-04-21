@@ -10,7 +10,7 @@ class Strategie:
 class Avancer(Strategie):
     """Fait avancer le robot d'une distance donnée, petit à petit"""
 
-    def __init__(self, distance, pas=5):
+    def __init__(self, distance, pas=2):
         self.distance = distance
         self.pas = pas
         self.position_depart = None 
@@ -86,21 +86,3 @@ class StratSequence(Strategie):
 
     def fini(self):
         return self.index >= len(self.strategies)
-
-
-
-class Carre(StratSequence):
-    """ fait un carré"""
-    def __init__(self,cote):
-        super().__init__([
-            Avancer(cote),
-            Tourner(90),
-            Avancer(cote),
-            Tourner(90),
-            Avancer(cote),
-            Tourner(90),
-            Avancer(cote),
-            Tourner(90),
-        ])
-
-

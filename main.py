@@ -4,10 +4,10 @@ from api.robot_adapter import RobotAdapter
 from controllers import GameController
 from controllers.strategie import Carre
 #from easygopigo3 import EasyGoPiGo3,Servo,DistanceSensor,MotionSensor 
-def main_simulation():
-    """Lance la simulation pygame"""
-    controller = GameController(width=400, height=400)
-    controller.run()
+#def main_simulation():
+    #"""Lance la simulation pygame"""
+    #controller = GameController(width=400, height=400)
+    #controller.run()
 
 
 def main_real():
@@ -32,6 +32,6 @@ def main_real():
         print("Robot arrêté")
 
 
-if __name__ == "__main_real__":
+if __name__ == "__main__":
     main_real()       # vrai robot
     #main_simulation()  # simulation
