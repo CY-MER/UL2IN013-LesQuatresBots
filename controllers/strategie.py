@@ -86,3 +86,21 @@ class StratSequence(Strategie):
 
     def fini(self):
         return self.index >= len(self.strategies)
+
+
+
+class Carre(StratSequence):
+    """ fait un carré"""
+    def __init__(self,cote):
+        super().__init__([
+            Avancer(cote),
+            Tourner(90),
+            Avancer(cote),
+            Tourner(90),
+            Avancer(cote),
+            Tourner(90),
+            Avancer(cote),
+            Tourner(90),
+        ])
+
+
