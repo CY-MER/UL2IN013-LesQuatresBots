@@ -18,7 +18,7 @@ class RobotAdapter:
     # Conversion vitesse simulation → degrés/sec
     # vitesse simulation = "pas par update", 1 pas ≈ 200 dps
     # À calibrer selon le comportement réel du robot
-    SCALE = 400
+    SCALE = 200
 
     def __init__(self, robot_physique: Robot2IN013):
         self.robot = robot_physique

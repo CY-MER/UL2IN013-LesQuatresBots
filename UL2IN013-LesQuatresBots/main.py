@@ -16,7 +16,7 @@ def main_reel():
     robot_physique = Robot2IN013()
     robot = RobotAdapter(robot_physique)
     strategie = StratSequence([
-            Avancer(100),
+            Avancer(1000),
             Tourner(90),
             Avancer(100),
             Tourner(90),
