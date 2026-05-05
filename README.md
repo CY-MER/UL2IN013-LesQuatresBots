@@ -9,7 +9,7 @@ Ce projet est réalisé par :
 
 ## Organisation du dépôt
 - **main** : version finale du projet
-- **anis** : branche de développement utilisée pour tester et implémenter les fonctionnalités avant intégration
+- **anis-tak-patch1** : branche de développement utilisée pour tester et implémenter les fonctionnalités avant intégration
 
 ## Description du projet
 Ce projet consiste à concevoir un mini-robot autonome capable de se déplacer dans un environnement en évitant des obstacles et de tracer un carré . 
