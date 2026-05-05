@@ -3,7 +3,9 @@
 ## 👥 Équipe
 
 Ce projet est réalisé par :
-@Anis-tak | @liliasophia2006 | @yasmineboukercha75-droid
+- [Anis-tak](https://github.com/Anis-tak)
+- [liliasophia2006](https://github.com/liliasophia2006)
+- [yasmineboukercha75-droid](https://github.com/yasmineboukercha75-droid)
 
 - **main** : version finale du projet 
 - **anis-tak-patch1** : branche de développement utilisée pour tester et implémenter les fonctionnalités avant intégration
