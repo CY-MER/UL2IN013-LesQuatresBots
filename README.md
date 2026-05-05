@@ -8,10 +8,6 @@ Ce projet est réalisé par :
 - [yasmineboukercha75-droid](https://github.com/yasmineboukercha75-droid)
 
 ---
-**main** : version finale du projet 
-**anis-tak-patch1** : branche de développement utilisée pour tester et implémenter les fonctionnalités avant intégration
-
----
 ## 📖 Sommaire
 
 - À propos du projet  
@@ -98,3 +94,5 @@ PROJET-ROBOT/
 pip install pygame
 Lancer la simulation : python main.py
 
+**main** : version finale du projet 
+**anis-tak-patch1** : branche de développement utilisée pour tester et implémenter les fonctionnalités avant intégration
