@@ -71,18 +71,19 @@ Le `RobotAdapter` permet d’utiliser les mêmes commandes :
 ## 📂 Structure du projet
 PROJET-ROBOT/
 ├── src/
-│ ├── model/ # Robot, Vecteur2D, Point , Obstacles
-│ ├── strategy/ # Stratégies (Pattern Strategy)
-│ ├── adapter/ # RobotAdapter (Pattern Adapter)
-│ ├── view/ # Simulation Pygame
-│ ├── controller/ # SimulationController
-│ └── main.py # Lancement du programme
+│   ├── model/          # Robot, Vecteur2D, Point, Obstacles
+│   ├── strategy/       # Stratégies (Pattern Strategy)
+│   ├── adapter/        # RobotAdapter (Pattern Adapter)
+│   ├── view/           # Simulation Pygame
+│   ├── controller/     # SimulationController
+│   └── main.py         # Lancement du programme
 │
-└── README.md
-│
+├── README.md
 └── rapport_projett.pdf
 
 ## 🚀 Installation & Lancement
+**main** : version finale du projet 
+**anis-tak-patch1** : branche de développement utilisée pour tester et implémenter les fonctionnalités avant intégration
 
 ### Prérequis
 
@@ -94,5 +95,3 @@ PROJET-ROBOT/
 pip install pygame
 Lancer la simulation : python main.py
 
-**main** : version finale du projet 
-**anis-tak-patch1** : branche de développement utilisée pour tester et implémenter les fonctionnalités avant intégration
